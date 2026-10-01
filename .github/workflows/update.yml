@@ -5,7 +5,7 @@ on:
     - cron: '0 12 * * 1'
   workflow_dispatch: {}
 jobs:
-  Build-Builds-From-Script:
+  Update-With-Script:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -36,5 +36,7 @@ jobs:
           body: |
             !THIS IS AN AUTOMATED PR!
             
-            Updated fyi.soltfrfr.NightmareEditor.yml to the latest commit 
-          branch: master
+            Updated fyi.soltfrfr.NightmareEditor.yml to the latest commit.
+            From workflow run ${{ github.run_id }}
+          branch: auto-${{ github.run_id }}
+          base: master
