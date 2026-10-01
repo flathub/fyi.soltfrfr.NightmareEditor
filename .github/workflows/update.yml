@@ -1,0 +1,40 @@
+name: Update manifest
+run-name: Update manifest to the latest commit of Nightmare-Editor-AUI
+on:
+  schedule:
+    - cron: '0 12 * * 1'
+  workflow_dispatch: {}
+jobs:
+  Build-Builds-From-Script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v6
+        
+      - name: Install git
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git
+          
+      - name: Update manifest
+        run: |
+          cd ${{ github.workspace }}
+          git clone https://github.com/solt-frfr/Nightmare-Editor-AUI.git
+          cd Nightmare-Editor-AUI/flatpak
+          sudo bash update-manifest.sh
+          cd ..
+          cd ..
+          rm fyi.soltfrfr.NightmareEditor.yml
+          mv Nightmare-Editor-AUI/flatpak/fyi.soltfrfr.NightmareEditor.yml fyi.soltfrfr.NightmareEditor.yml
+          rm -rf Nightmare-Editor-AUI
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          commit-message: update fyi.soltfrfr.NightmareEditor.yml
+          title: Auto-update fyi.soltfrfr.NightmareEditor.yml
+          body: |
+            !THIS IS AN AUTOMATED PR!
+            
+            Updated fyi.soltfrfr.NightmareEditor.yml to the latest commit 
+          branch: master
