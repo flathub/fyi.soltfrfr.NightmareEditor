@@ -36,6 +36,7 @@ jobs:
           body: |
             !THIS IS AN AUTOMATED PR!
             
-            Updated fyi.soltfrfr.NightmareEditor.yml to the latest commit 
-          branch: auto-update
+            Updated fyi.soltfrfr.NightmareEditor.yml to the latest commit.
+            From workflow run ${{ github.run_id }}
+          branch: auto-${{ github.run_id }}
           base: master
