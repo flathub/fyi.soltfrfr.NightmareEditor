@@ -13,6 +13,7 @@ command: NightmareEditor
 finish-args:      
   - --device=dri
   - --share=ipc
+  - --share=network
   - --socket=wayland
   - --socket=fallback-x11
   - --filesystem=~/.var/app/org.azahar_emu.Azahar/data/azahar_emu
